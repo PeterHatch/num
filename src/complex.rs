@@ -42,7 +42,7 @@ impl<T: Clone + Num> Complex<T> {
     /// Returns imaginary unit
     #[inline]
     pub fn i() -> Complex<T> {
-        Self::new(T::zero(), T::one())
+        Self::new(Zero::zero(), T::one())
     }
 
     /// Returns the square of the norm (since `T` doesn't necessarily
@@ -206,10 +206,10 @@ impl<T: Clone + Float> Complex<T> {
         let one = Complex::one();
         let two = one + one;
         if *self == i {
-            return Complex::new(T::zero(), T::infinity());
+            return Complex::new(Zero::zero(), T::infinity());
         }
         else if *self == -i {
-            return Complex::new(T::zero(), -T::infinity());
+            return Complex::new(Zero::zero(), -T::infinity());
         }
         ((one + i * self).ln() - (one - i * self).ln()) / (two * i)
     }
@@ -280,10 +280,10 @@ impl<T: Clone + Float> Complex<T> {
         let one = Complex::one();
         let two = one + one;
         if *self == one {
-            return Complex::new(T::infinity(), T::zero());
+            return Complex::new(T::infinity(), Zero::zero());
         }
         else if *self == -one {
-            return Complex::new(-T::infinity(), T::zero());
+            return Complex::new(-T::infinity(), Zero::zero());
         }
         ((one + self).ln() - (one - self).ln()) / two
     }
@@ -316,7 +316,7 @@ impl<T: Clone + Float> Complex<T> {
 impl<T: Clone + Num> From<T> for Complex<T> {
     #[inline]
     fn from(re: T) -> Complex<T> {
-        Complex { re: re, im: T::zero() }
+        Complex { re: re, im: Zero::zero() }
     }
 }
 
@@ -547,6 +547,11 @@ impl<T: Clone + Num> Zero for Complex<T> {
     }
 }
 
+impl<T: Clone + Num> ::std::num::Zero for Complex<T> {
+    #[inline]
+    fn zero() -> Complex<T> { Zero::zero() }
+}
+
 impl<T: Clone + Num> One for Complex<T> {
     #[inline]
     fn one() -> Complex<T> {
@@ -560,7 +565,7 @@ impl<T> fmt::Display for Complex<T> where
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         if self.im < Zero::zero() {
-            write!(f, "{}-{}i", self.re, T::zero() - self.im.clone())
+            write!(f, "{}-{}i", self.re, <T as Zero>::zero() - self.im.clone())
         } else {
             write!(f, "{}+{}i", self.re, self.im)
         }

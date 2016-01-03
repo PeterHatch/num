@@ -597,6 +597,11 @@ impl Zero for BigUint {
     fn is_zero(&self) -> bool { self.data.is_empty() }
 }
 
+impl ::std::num::Zero for BigUint {
+    #[inline]
+    fn zero() -> BigUint { Zero::zero() }
+}
+
 impl One for BigUint {
     #[inline]
     fn one() -> BigUint { BigUint::new(vec!(1)) }
@@ -1868,6 +1873,11 @@ impl Zero for BigInt {
 
     #[inline]
     fn is_zero(&self) -> bool { self.sign == NoSign }
+}
+
+impl ::std::num::Zero for BigInt {
+    #[inline]
+    fn zero() -> BigInt { Zero::zero() }
 }
 
 impl One for BigInt {

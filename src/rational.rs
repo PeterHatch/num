@@ -101,9 +101,9 @@ impl<T: Clone + Integer + PartialOrd> Ratio<T> {
         self.denom = self.denom.clone() / g;
 
         // keep denom positive!
-        if self.denom < T::zero() {
-            self.numer = T::zero() - self.numer.clone();
-            self.denom = T::zero() - self.denom.clone();
+        if self.denom < Zero::zero() {
+            self.numer = <T as Zero>::zero() - self.numer.clone();
+            self.denom = <T as Zero>::zero() - self.denom.clone();
         }
     }
 
@@ -387,6 +387,12 @@ impl<T: Clone + Integer + PartialOrd>
     fn is_zero(&self) -> bool {
         *self == Zero::zero()
     }
+}
+
+impl<T: Clone + Integer + PartialOrd>
+    ::std::num::Zero for Ratio<T> {
+    #[inline]
+    fn zero() -> Ratio<T> { Zero::zero() }
 }
 
 impl<T: Clone + Integer + PartialOrd>

@@ -212,7 +212,7 @@ float_trait_impl!(Num for f32 f64);
 /// This trait can be automatically be derived using `#[deriving(Zero)]`
 /// attribute. If you choose to use this, make sure that the laws outlined in
 /// the documentation for `Zero::zero` still hold.
-pub trait Zero: Sized + Add<Self, Output = Self> {
+pub trait Zero: Sized + Add<Self, Output = Self> + ::std::num::Zero {
     /// Returns the additive identity element of `Self`, `0`.
     ///
     /// # Laws
